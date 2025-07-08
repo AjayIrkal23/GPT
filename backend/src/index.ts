@@ -9,7 +9,7 @@ const start = async () => {
   // hehehe
   await registerAppPlugins(app);
 
-  app.listen({ port: config.port }, (err, address) => {
+  app.listen({ port: config.port, host: "0.0.0.0" }, (err, address) => {
     if (err) {
       app.log.error(err);
       process.exit(1);
