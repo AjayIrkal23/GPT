@@ -129,11 +129,16 @@ export const getUniqueAnnotatedImages = async (
     let skip = 0;
     let exhausted = false;
 
+    const baseFilter = {
+      violationDetails: { $exists: true, $not: { $size: 0 } },
+    };
+
     while (uniqueImages.length < MAX_UNIQUE && !exhausted) {
-      const batch = await ImageResultModel.find()
+      const batch = await ImageResultModel.find(baseFilter)
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(BATCH_SIZE);
+        .limit(BATCH_SIZE)
+        .lean();
 
       if (!batch.length) {
         exhausted = true;
