@@ -135,7 +135,7 @@ export const getUniqueAnnotatedImages = async (
 
     while (uniqueImages.length < MAX_UNIQUE && !exhausted) {
       const batch = await ImageResultModel.find(baseFilter)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: 1 })
         .skip(skip)
         .limit(BATCH_SIZE)
         .lean();
